@@ -1,0 +1,11 @@
+export const ROUTES_NAME = {
+  LOG_IN: "/",
+  PRODUCT_LIST: "/",
+  ABOUTE_US: "/aboute-us",
+};
+
+export const ROUTES_DEFINATION = {
+  LOG_IN: ROUTES_NAME.LOG_IN,
+  PRODUCT_LIST: ROUTES_NAME.PRODUCT_LIST,
+  ABOUTE_US: ROUTES_NAME.ABOUTE_US,
+};

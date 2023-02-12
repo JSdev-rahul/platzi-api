@@ -12,8 +12,7 @@ function CommonCarosle() {
           style={{
             height: "85vh",
           }}
-          src="https://cdn.pixabay.com/p
-          hoto/2017/08/05/00/12/girl-2581913__340.jpg"
+          src="https://cdn.pixabay.com/photo/2017/08/05/00/12/girl-2581913__340.jpg"
         />
         {/* <p className="legend">Legend 1</p> */}
       </div>

@@ -1,11 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getProductListAsyncThunk } from "../asyncThunk/product.asyncThunk";
+
+import {
+  getCategoryListAsncThunk,
+  getProductListAsyncThunk,
+} from "../asyncThunk/product.asyncThunk";
 import { STATUS } from "../constant/reduxHelper";
 
 const initialState = {
   list: [],
   status: "",
   count: "",
+  categoryList: [],
+  categoryListStatus: "",
 };
 
 export const GetProductListSlice = createSlice({
@@ -23,9 +29,20 @@ export const GetProductListSlice = createSlice({
     builder.addCase(getProductListAsyncThunk.rejected, (state, action) => {
       state.status = STATUS.REJECT;
     });
+
+    // ? handle category List
+
+    builder.addCase(getCategoryListAsncThunk.pending, (state, action) => {
+      state.categoryListStatus = STATUS.PENDING;
+    });
+    builder.addCase(getCategoryListAsncThunk.fulfilled, (state, action) => {
+      state.categoryList = action.payload;
+      state.categoryListStatus = STATUS.FULFILED;
+    });
+    builder.addCase(getCategoryListAsncThunk.rejected, (state, action) => {
+      state.categoryListStatus = STATUS.REJECT;
+    });
   },
 });
-
 export const productListState = (state) => state.productStateList;
-
 export default GetProductListSlice.reducer;

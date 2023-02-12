@@ -1,41 +1,90 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductListAsyncThunk } from "../../../redux/asyncThunk/product.asyncThunk";
+import {
+  getCategoryListAsncThunk,
+  getProductListAsyncThunk,
+  getProductListByCategoryThunk,
+} from "../../../redux/asyncThunk/product.asyncThunk";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { Box, Grid, Pagination, Skeleton } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Pagination,
+  Select,
+  Skeleton,
+} from "@mui/material";
 import CommonCarosle from "../../common/carosole";
 import { width } from "@mui/system";
+import { getProductListByCategoryService } from "../../../redux/services/product.service";
 
 function ProductListPage() {
-  const { list } = useSelector((state) => state?.product);
+  const { list, categoryList } = useSelector((state) => state?.product);
 
   const dispatch = useDispatch();
   const [pageData, setPageData] = useState({
-    offset: 0,
+    offset: 10,
     limit: 10,
+    categoryId: "",
   });
   useEffect(() => {
     dispatch(getProductListAsyncThunk(pageData));
   }, [pageData]);
+  useEffect(() => {
+    dispatch(getCategoryListAsncThunk());
+  }, []);
+  const [selectedCategory, setSelectedCategory] = useState("");
   const handleChange = (e, value) => {
     setPageData({
       ...pageData,
-      offset: pageData.offset + 10,
+      offset: 10 * value,
       limit: 10 * value,
+      categoryId: selectedCategory,
     });
-    // console.log("eee",e)
-    // console.log("value",value)
   };
-  console.log("pageData", pageData);
+
+  const handleFilterChange = (e, value) => {
+    setSelectedCategory(e.target.value);
+    setPageData({
+      ...pageData,
+      offset: 10,
+      limit: 10,
+      categoryId: e.target.value,
+    });
+
+  };
+
   return (
     <>
       <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
         <CommonCarosle />
+      </Box>
+      <Box sx={{ mt: 2, mb: 2, mx: 2 }}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">category</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={selectedCategory}
+            label="category"
+            onChange={handleFilterChange}
+          >
+            {categoryList?.map((item) => {
+              return (
+                <MenuItem key={item.id} value={item?.id}>
+                  {item?.name}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
       </Box>
       <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 1, md: 0 }}>
         {list?.map((item) => {
@@ -43,7 +92,6 @@ function ProductListPage() {
             <Card sx={{ maxWidth: 365, mt: 3, ml: 5 }}>
               {item ? (
                 <CardMedia
-              
                   sx={{ height: 140 }}
                   image={item?.category.image}
                   title="green iguana"
@@ -64,8 +112,8 @@ function ProductListPage() {
                 </CardContent>
               ) : (
                 <Box sx={{ pt: 0.5 }}>
-                  <Skeleton />
-                  <Skeleton width="60%" />
+                  <Skeleton   variant="rectangular"/>
+                  <Skeleton  variant="rectangular" width="60%" />
                 </Box>
               )}
               <CardActions>

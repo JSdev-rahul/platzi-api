@@ -1,5 +1,6 @@
 import Axios from "axios";
-import { METHODS } from "../constant/reduxHelper";
+
+import { METHODS, replaceUrl } from "../constant/reduxHelper";
 import { SERVICE_CONSTATNT } from "../constant/ServiceConstant";
 
 export const GetProductListService = (params) => {
@@ -7,7 +8,7 @@ export const GetProductListService = (params) => {
     let config = {
       url: SERVICE_CONSTATNT.GET_PRODUCT_LIST,
       methods: METHODS.GE,
-      params
+      params,
     };
     Axios.request(config)
       .then((res) => {
@@ -18,3 +19,23 @@ export const GetProductListService = (params) => {
       });
   });
 };
+
+// category list service
+
+export const getCategoryListService = (payload) => {
+  return new Promise((resolve, reject) => {
+    let config = {
+      url: SERVICE_CONSTATNT.CATEGORY_List,
+      methods: METHODS.GET,
+    };
+    Axios.request(config)
+      .then((res) => {
+        return resolve(res);
+      })
+      .catch((err) => {
+        return reject(err);
+      });
+  });
+};
+
+

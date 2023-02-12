@@ -38,4 +38,20 @@ export const getCategoryListService = (payload) => {
   });
 };
 
-
+export const GetProductDetailsService = (payload) => {
+ 
+  const { id } = payload;
+  return new Promise((resolve, reject) => {
+    let config = {
+      url: replaceUrl(SERVICE_CONSTATNT.GET_PRODUCT_DETAILS, { id }),
+      methods: METHODS.GET,
+    };
+    Axios.request(config)
+      .then((res) => {
+        return resolve(res);
+      })
+      .catch((err) => {
+        return reject(err);
+      });
+  });
+};

@@ -29,10 +29,9 @@ export const LogInSlice = createSlice({
       state.status = STATUS.REJECT;
     });
 
-    // ?  Hold User details
+    // ?  get User details
 
     builder.addCase(userInfoAsyncThunk.fulfilled, (state, action) => {
-      console.log("payload", action);
       state.user = action?.payload;
     });
   },

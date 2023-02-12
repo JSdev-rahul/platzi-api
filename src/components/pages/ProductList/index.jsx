@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getCategoryListAsncThunk,
   getProductListAsyncThunk,
-  getProductListByCategoryThunk,
 } from "../../../redux/asyncThunk/product.asyncThunk";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -22,13 +21,15 @@ import {
   Skeleton,
 } from "@mui/material";
 import CommonCarosle from "../../common/carosole";
-import { width } from "@mui/system";
-import { getProductListByCategoryService } from "../../../redux/services/product.service";
+import { useNavigate } from "react-router-dom";
+import { replaceUrl } from "../../../redux/constant/reduxHelper";
+import { ROUTES_DEFINATION } from "../../../constant/routes";
 
 function ProductListPage() {
   const { list, categoryList } = useSelector((state) => state?.product);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [pageData, setPageData] = useState({
     offset: 10,
     limit: 10,
@@ -58,7 +59,6 @@ function ProductListPage() {
       limit: 10,
       categoryId: e.target.value,
     });
-
   };
 
   return (
@@ -112,13 +112,24 @@ function ProductListPage() {
                 </CardContent>
               ) : (
                 <Box sx={{ pt: 0.5 }}>
-                  <Skeleton   variant="rectangular"/>
-                  <Skeleton  variant="rectangular" width="60%" />
+                  <Skeleton variant="rectangular" />
+                  <Skeleton variant="rectangular" width="60%" />
                 </Box>
               )}
               <CardActions>
-                <Button size="small">Share</Button>
-                <Button size="small">Learn More</Button>
+                <Button
+                  onClick={() =>
+                    navigate(
+                      replaceUrl(ROUTES_DEFINATION.VIEW_PRODUCT, {
+                        id: item?.id,
+                      })
+                    )
+                  }
+                  size="small"
+                >
+                  View
+                </Button>
+                <Button size="small">Add to cart</Button>
               </CardActions>
             </Card>
           );

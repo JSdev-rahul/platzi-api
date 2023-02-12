@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ASYNC_CONSTATNT } from "../constant/ThunkConstant";
 import {
   getCategoryListService,
+  GetProductDetailsService,
   getProductListByCategoryService,
   GetProductListService,
 } from "../services/product.service";
@@ -32,4 +33,16 @@ export const getCategoryListAsncThunk = createAsyncThunk(
   }
 );
 
-// ? getProduct By Category
+// ? getproductDetails
+
+export const getProductDetailsThunk = createAsyncThunk(
+  ASYNC_CONSTATNT.GET_PRODUCT_DETAILS,
+  async (payload, { rejectWithValue }) => {
+    try {
+      const responce = await GetProductDetailsService(payload);
+      return responce;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);

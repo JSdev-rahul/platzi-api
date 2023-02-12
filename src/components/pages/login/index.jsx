@@ -47,7 +47,7 @@ export default function SignIn() {
   const formik = useFormik({
     initialValues: initialState,
     onSubmit: (values) => {
-      console.log(values);
+   
       dispatch(loginAsyncThunk(values))
         .unwrap()
         .then((res) => {

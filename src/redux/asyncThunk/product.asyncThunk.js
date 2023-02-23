@@ -11,8 +11,8 @@ export const getProductListAsyncThunk = createAsyncThunk(
   ASYNC_CONSTATNT.GET_PRODUCT_LIST,
   async (payload, { rejectWithValue }) => {
     try {
-      const responce = await GetProductListService(payload);
-      return responce;
+      const response = await GetProductListService(payload);
+      return response;
     } catch (err) {
       return rejectWithValue(err);
     }
@@ -25,8 +25,8 @@ export const getCategoryListAsncThunk = createAsyncThunk(
   ASYNC_CONSTATNT.CATEGORY_LISt,
   async (payload, { rejectWithValue }) => {
     try {
-      const responce = await getCategoryListService(payload);
-      return responce;
+      const response = await getCategoryListService(payload);
+      return response;
     } catch (err) {
       return rejectWithValue(err);
     }
@@ -39,8 +39,8 @@ export const getProductDetailsThunk = createAsyncThunk(
   ASYNC_CONSTATNT.GET_PRODUCT_DETAILS,
   async (payload, { rejectWithValue }) => {
     try {
-      const responce = await GetProductDetailsService(payload);
-      return responce;
+      const response = await GetProductDetailsService(payload);
+      return response;
     } catch (err) {
       return rejectWithValue(err);
     }

@@ -31,7 +31,7 @@ function ProductListPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [pageData, setPageData] = useState({
-    offset: 10,
+    offset: 0,
     limit: 10,
     categoryId: "",
   });
@@ -45,8 +45,8 @@ function ProductListPage() {
   const handleChange = (e, value) => {
     setPageData({
       ...pageData,
-      offset: 10 * value,
-      limit: 10 * value,
+      offset: (value-0)*10,
+      limit: 10,
       categoryId: selectedCategory,
     });
   };

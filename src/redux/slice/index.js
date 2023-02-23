@@ -7,8 +7,10 @@
 import { combineReducers } from "redux";
 import AuthSlice  from "./loginSlice";
 import GetProductListSlice  from "./productSlice";
+import UserSlice  from "./userSlice";
 
 export default combineReducers({
   auth: AuthSlice,
-  product:GetProductListSlice
+  product:GetProductListSlice,
+  user:UserSlice
 });

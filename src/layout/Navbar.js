@@ -30,6 +30,10 @@ const customerRoutes = [
     path: "#",
   },
   {
+    name: "User",
+    path: ROUTES_DEFINATION.USER_LIST,
+  },
+  {
     name: "Aboute us",
     path: ROUTES_DEFINATION.ABOUTE_US,
   },
@@ -172,10 +176,18 @@ function Navbar() {
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt="Remy Sharp" src={avatar} />
-                  <Typography
-                    sx={{ ml: 2, color: "white", display: "block" }}
-                  >{role}</Typography>
-                  
+                  <Box>
+                    <Typography
+                      sx={{ ml: 2, color: "white", display: "block" }}
+                    >
+                      {role}
+                    </Typography>
+                    <Typography
+                      sx={{ ml: 2, color: "white", display: "block" }}
+                    >
+                      {name}
+                    </Typography>
+                  </Box>
                 </IconButton>
               </Tooltip>
               <Menu

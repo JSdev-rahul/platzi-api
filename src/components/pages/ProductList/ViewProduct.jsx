@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getProductDetailsThunk } from "../../../redux/asyncThunk/product.asyncThunk";
+import { addToCart, decrimentQuentity, incrimentQuentity } from "../../../redux/slice/cart";
 
 function ViewProduct() {
   const dispatch = useDispatch();
@@ -20,7 +21,9 @@ function ViewProduct() {
   }, [params]);
   return (
     <>
-      <Box>
+      <Box sx={{
+        mt:10
+      }}  >
         <Grid sx={{ mt: 2, mx: { md: 5, xl: 5, xxl: 5, xs: 2 }, mb: 2 }}>
           <Paper
             sx={{
@@ -175,7 +178,7 @@ function ViewProduct() {
                       },
                     }}
                   >
-                    <Box
+                    {/* <Box
                       sx={{
                         p: 2,
                         justifyItems: { md: "center" },
@@ -183,15 +186,18 @@ function ViewProduct() {
                         gap: 2,
                         display: "flex",
                       }}
-                    >
-                      <Button variant="contained">-</Button>
+                    > */}
+                      {/* <Button onClick={()=>dispatch(decrimentQuentity(productDeatail?.id))} variant="contained">-</Button>
                       <Typography>{1}</Typography>
 
-                      <Button variant="contained">+</Button>
-                    </Box>
+                      <Button  onClick={()=>dispatch(incrimentQuentity(productDeatail?.id))} variant="contained">+</Button> */}
+                    {/* </Box> */}
                     <Box>
                       <Button
+                        onClick={()=>dispatch(addToCart(productDeatail))}
                         sx={{
+                          ml: 2,
+                          mt:2,
                           display: { xs: "flex" },
                         }}
                         variant="contained"

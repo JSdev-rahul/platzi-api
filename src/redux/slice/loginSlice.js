@@ -4,7 +4,7 @@ import { userInfoAsyncThunk } from "../asyncThunk/userInfo.asyncThunk";
 import { STATUS } from "../constant/reduxHelper";
 
 const initialState = {
-  user: [],
+  user: {},
   token: null,
   status: null,
 };
@@ -14,7 +14,7 @@ export const LogInSlice = createSlice({
   reducers: {
     removeToken: (state, action) => {
       state.token = null;
-      state.user = null;
+      state.user = {};
     },
   },
   extraReducers: (builder) => {

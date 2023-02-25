@@ -14,12 +14,18 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Outlet, useNavigate } from "react-router-dom";
 import { ROUTES_DEFINATION } from "../constant/routes";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { removeToken } from "../redux/slice/loginSlice";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import { Badge } from "@mui/material";
+import { styled } from "@mui/material/styles";
+// import IconButton from '@mui/material/IconButton';
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 const adminroutes = [
   {
     name: "User",
-    path: "#",
+    path: ROUTES_DEFINATION.USER_LIST,
   },
   { name: "Product", path: ROUTES_DEFINATION.PRODUCT_LIST },
 ];
@@ -29,10 +35,10 @@ const customerRoutes = [
     name: "Home",
     path: "#",
   },
-  {
-    name: "User",
-    path: ROUTES_DEFINATION.USER_LIST,
-  },
+  // {
+  //   name: "User",
+  //   path: ROUTES_DEFINATION.USER_LIST,
+  // },
   {
     name: "Aboute us",
     path: ROUTES_DEFINATION.ABOUTE_US,
@@ -48,6 +54,8 @@ const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function Navbar() {
+  const { cart } = useSelector((state) => state?.cart);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { role, avatar, name } = useSelector((state) => state?.auth?.user);
 
@@ -68,13 +76,26 @@ function Navbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
+  const StyledBadge = styled(Badge)(({ theme }) => ({
+    "& .MuiBadge-badge": {
+      right: -3,
+      top: 3,
+      border: `2px solid ${theme.palette.background.paper}`,
+      padding: "0 4px",
+    },
+  }));
   return (
     <>
-      <AppBar position="static">
+      <AppBar sx={{
+        position: "fixed",
+        top: 0,
+        width: "100%",
+        zIndex:"999px",
+        
+      }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+            {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
             <Typography
               variant="h6"
               noWrap
@@ -150,26 +171,38 @@ function Navbar() {
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {role == "customer"
-                ? customerRoutes?.map((item) => (
+                ? customerRoutes?.map((item, index) => (
                     <Button
-                      // key={page}
+                      key={index}
                       onClick={() => navigate(item?.path)}
                       sx={{ my: 2, color: "white", display: "block" }}
                     >
                       {item?.name}
                     </Button>
                   ))
-                : null}
-
-              {/* {pages.map((page) => (
-                <Button
-                  key={page}
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "white", display: "block" }}
-                >
-                  {page}
-                </Button>
-              ))} */}
+                : adminroutes?.map((item, index) => (
+                    <Button
+                      key={index}
+                      onClick={() => navigate(item?.path)}
+                      sx={{ my: 2, color: "white", display: "block" }}
+                    >
+                      {item?.name}
+                    </Button>
+                  ))}
+              <IconButton
+                onClick={() => navigate(ROUTES_DEFINATION.CART)}
+                aria-label="cart"
+              >
+                <StyledBadge badgeContent={cart?.length} color="secondary">
+                  <AddShoppingCartIcon />
+                </StyledBadge>
+              </IconButton>
+              <Button
+                onClick={() => dispatch(removeToken())}
+                sx={{ my: 2, color: "white", display: "block" }}
+              >
+                LogOut
+              </Button>
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>

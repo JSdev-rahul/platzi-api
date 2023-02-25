@@ -9,7 +9,7 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  whiteList : ["auth"]
+  whiteList : ["auth","cart"]
 };
 
 export const persitedReducer = persistReducer(persistConfig, rootReducers);

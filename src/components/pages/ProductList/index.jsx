@@ -24,6 +24,7 @@ import CommonCarosle from "../../common/carosole";
 import { useNavigate } from "react-router-dom";
 import { replaceUrl } from "../../../redux/constant/reduxHelper";
 import { ROUTES_DEFINATION } from "../../../constant/routes";
+import { addToCart } from "../../../redux/slice/cart";
 
 function ProductListPage() {
   const { list, categoryList } = useSelector((state) => state?.product);
@@ -32,7 +33,7 @@ function ProductListPage() {
   const navigate = useNavigate();
   const [pageData, setPageData] = useState({
     offset: 0,
-    limit: 10,
+    limit: 12,
     categoryId: "",
   });
   useEffect(() => {
@@ -45,8 +46,8 @@ function ProductListPage() {
   const handleChange = (e, value) => {
     setPageData({
       ...pageData,
-      offset: (value-0)*10,
-      limit: 10,
+      offset: (value - 0) * 10,
+      limit: 12,
       categoryId: selectedCategory,
     });
   };
@@ -63,10 +64,10 @@ function ProductListPage() {
 
   return (
     <>
-      <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+      <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" },mt:10 }}>
         <CommonCarosle />
       </Box>
-      <Box sx={{ mt: 2, mb: 2, mx: 2 }}>
+      <Box sx={{ mt: 2, mb: 2, mx: 2 ,}}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">category</InputLabel>
           <Select
@@ -129,7 +130,9 @@ function ProductListPage() {
                 >
                   View
                 </Button>
-                <Button size="small">Add to cart</Button>
+                <Button
+                onClick={()=>dispatch(addToCart(item))}
+                size="small">Add to cart</Button>
               </CardActions>
             </Card>
           );
